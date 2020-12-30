@@ -1,4 +1,4 @@
-package paraEstudiantes;
+package presentacion;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -29,7 +29,7 @@ public class VentanaBici extends JFrame{
 		setResizable(true);
 		pnlContenedor = new JPanel();
 		getContentPane().add(pnlContenedor);
-		lblCodigo = new JLabel("  Ingrese código:");
+		lblCodigo = new JLabel("  Ingrese cï¿½digo:");
 		lblCodigo.setBounds(32, 19, 81, 14);
 		lblLabel2 = new JLabel();
 		lblLabel2.setBounds(209, 16, 0, 0);

@@ -1,4 +1,4 @@
-package paraEstudiantes;
+package logica;
 
 import java.util.ArrayList;
 
