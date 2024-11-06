@@ -1,109 +1,217 @@
+
 package grafica;
 
-import java.awt.Color;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import logica.Auto;
+import logica.ListaAutos;
+import logica.Vehiculo;
 
 public class FrmAgregarAuto extends JFrame {
 
-	private JPanel contentPane;
-	private JTextField txtMatricula;
-	private JTextField txtCuotaNeta;
-	private JButton btnCalcular;
-	private JButton btnLimpiar;
-	private JButton btnGuardar;
-	private JTextField txtSaldoCuota;
+    private JPanel contentPane;
+    private JTextField txtMatricula, txtMarca, txtPrecio, txtCilindrada, txtPromocion;
+    private JCheckBox chkEsAuto;
+    private JButton btnGuardar, btnCalcular, btnLimpiar;
+    private ListaAutos listaAutos;
+  
+    public FrmAgregarAuto() {
+        listaAutos = new ListaAutos(); // Inicializar ListaAutos
+        setTitle("Gestión de Autos");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 500, 254);
+        iniciarComponentes();
+        iniciarManejadoresEventos();
+    }
 
+    private void iniciarComponentes() {
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
 
-	public FrmAgregarAuto() {
-		setBounds(10, 10, 495, 227);
-		setTitle("Agregar Autos");
-		iniciarComponentes();
-		iniciarManejadoresEventos();
+        // Panel de Datos del Vehículo
+        JPanel panel1 = new JPanel();
+        panel1.setBackground(Color.LIGHT_GRAY);
+        panel1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, Color.WHITE, Color.GRAY),
+                "Datos del vehículo", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
+        panel1.setBounds(10, 10, 236, 190);
+        contentPane.add(panel1);
+        panel1.setLayout(null);
 
-	}
-	
+        JLabel lblMatricula = new JLabel("Matrícula:");
+        lblMatricula.setBounds(10, 25, 80, 20);
+        panel1.add(lblMatricula);
 
-	private void iniciarComponentes() {
-		
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+        txtMatricula = new JTextField();
+        txtMatricula.setBounds(100, 25, 120, 20);
+        panel1.add(txtMatricula);
 
-		JPanel panel1 = new JPanel();
-		panel1.setBackground(Color.LIGHT_GRAY);
-		panel1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Datos del ", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel1.setBounds(10, 11, 236, 110);
-		contentPane.add(panel1);
-		panel1.setLayout(null);
+        JLabel lblMarca = new JLabel("Marca:");
+        lblMarca.setBounds(10, 55, 80, 20);
+        panel1.add(lblMarca);
 
-		JLabel lblMatricula = new JLabel("Matricula:");
-		lblMatricula.setBounds(10, 30, 96, 14);
-		panel1.add(lblMatricula);
+        txtMarca = new JTextField();
+        txtMarca.setBounds(100, 55, 120, 20);
+        panel1.add(txtMarca);
 
-		JLabel lblMarca = new JLabel("Marca:");
-		lblMarca.setBounds(10, 55, 96, 14);
-		panel1.add(lblMarca);
+        JLabel lblPrecio = new JLabel("Precio:");
+        lblPrecio.setBounds(10, 85, 80, 20);
+        panel1.add(lblPrecio);
 
-		txtMatricula = new JTextField();
-		txtMatricula.setBounds(116, 27, 110, 20);
-		panel1.add(txtMatricula);
-		txtMatricula.setColumns(10);
+        txtPrecio = new JTextField();
+        txtPrecio.setBounds(100, 85, 120, 20);
+        panel1.add(txtPrecio);
 
-		JPanel panel2 = new JPanel();
-		panel2.setBackground(Color.LIGHT_GRAY);
-		panel2.setBorder(
-				new TitledBorder(null, "Calculo de la cuota neta", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel2.setBounds(256, 115, 213, 58);
-		contentPane.add(panel2);
-		panel2.setLayout(null);
+        btnLimpiar = new JButton("Limpiar");
+        btnLimpiar.setBounds(20, 139, 90, 25);
+        panel1.add(btnLimpiar);
+        
+                // Botón para agregar autos
+                btnGuardar = new JButton("Guardar");
+                btnGuardar.setBounds(120, 140, 97, 23);
+                panel1.add(btnGuardar);
 
-		txtCuotaNeta = new JTextField();
-		txtCuotaNeta.setEditable(false);
-		txtCuotaNeta.setBounds(117, 25, 86, 20);
-		panel2.add(txtCuotaNeta);
-		txtCuotaNeta.setColumns(10);
+        // Panel de Datos del Auto
+        JPanel panel2 = new JPanel();
+        panel2.setBackground(Color.LIGHT_GRAY);
+        panel2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, Color.WHITE, Color.GRAY),
+                "Datos del auto", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
+        panel2.setBounds(256, 10, 213, 100);
+        contentPane.add(panel2);
+        panel2.setLayout(null);
 
-		btnCalcular = new JButton("Calcular");
-		btnCalcular.setBounds(10, 24, 89, 23);
-		panel2.add(btnCalcular);
+        JLabel lblCilindrada = new JLabel("Cilindrada:");
+        lblCilindrada.setBounds(10, 60, 80, 20);
+        panel2.add(lblCilindrada);
 
-		btnLimpiar = new JButton("Limpiar");
-		btnLimpiar.setBounds(10, 150, 89, 23);
-		contentPane.add(btnLimpiar);
+        txtCilindrada = new JTextField();
+        txtCilindrada.setBounds(100, 60, 100, 20);
+        txtCilindrada.setEnabled(false); // Inicialmente deshabilitado
+        panel2.add(txtCilindrada);
 
-		btnGuardar = new JButton("Guardar");
-		btnGuardar.setBounds(123, 150, 89, 23);
-		contentPane.add(btnGuardar);
+        // CheckBox para habilitar/deshabilitar el campo de cilindrada
+        chkEsAuto = new JCheckBox("¿Es un auto?");
+        chkEsAuto.setBounds(10, 25, 100, 20);
+        panel2.add(chkEsAuto);
 
-		JPanel panel3 = new JPanel();
-		panel3.setBackground(new Color(192, 192, 192));
-		panel3.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Datos del auto", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel3.setBounds(259, 11, 210, 93);
-		contentPane.add(panel3);
-		panel3.setLayout(null);
+        // Panel de Promoción
+        JPanel panel3 = new JPanel();
+        panel3.setBackground(Color.LIGHT_GRAY);
+        panel3.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, Color.WHITE, Color.GRAY),
+                "Cálculo de la promoción", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
+        panel3.setBounds(256, 120, 213, 80);
+        contentPane.add(panel3);
+        panel3.setLayout(null);
 
-		JLabel lblSaldoCuota = new JLabel("Saldo Cuota:");
-		lblSaldoCuota.setBounds(6, 53, 97, 14);
-		panel3.add(lblSaldoCuota);
+        btnCalcular = new JButton("Calcular");
+        btnCalcular.setBounds(10, 30, 90, 25);
+        panel3.add(btnCalcular);
 
-		txtSaldoCuota = new JTextField();
-		txtSaldoCuota.setBounds(113, 51, 86, 20);
-		panel3.add(txtSaldoCuota);
-		txtSaldoCuota.setColumns(10);
-	}
+        txtPromocion = new JTextField();
+        txtPromocion.setEditable(false);
+        txtPromocion.setBounds(110, 30, 90, 25);
+        panel3.add(txtPromocion);
+    }
 
-	private void iniciarManejadoresEventos() {
-		
-		
-	}
+    private void iniciarManejadoresEventos() {
+         
+    	 btnGuardar.addActionListener(new ActionListener() {
+         	public void actionPerformed(ActionEvent e) {
+         		Auto a;
+                Vehiculo v;
+         		try {
+					String matricula = txtMatricula.getText();
+					String marca = txtMarca.getText();
+					double precio = Double.valueOf(txtPrecio.getText());
+					if (chkEsAuto.isSelected()) {
+						
+						int cilindrada = Integer.valueOf(txtCilindrada.getText());
+						a = new Auto(matricula, marca, precio, cilindrada);
+						JOptionPane.showMessageDialog(null, a.toString());
 
+					} else {
+						v = new Vehiculo(matricula, marca, precio);
+						JOptionPane.showMessageDialog(null, v.toString());
 
+					}
+				} catch (Exception ex) {
+					txtPromocion.setText("Error");
+					JOptionPane.showMessageDialog(null, ex);
+				}
+         	}
+         });
+
+        // Acción del botón "Calcular" para la promoción
+        btnCalcular.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                calcularPromocion();
+            }
+        });
+
+        // Acción del botón "Limpiar"
+        btnLimpiar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                limpiarCampos();
+            }
+        });
+
+        // Acción del JCheckBox para habilitar/deshabilitar el campo de cilindrada
+        chkEsAuto.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                txtCilindrada.setEnabled(chkEsAuto.isSelected());
+            }
+        });
+    }//fin iniciarManejadoresEventos
+
+   
+    // Método para calcular la promoción y mostrar el precio con descuento
+    private void calcularPromocion() {
+        // Verificar si los campos requeridos están vacíos
+        if (!camposVacios()) {
+              
+	        try {
+	            String matricula = txtMatricula.getText();
+	            String marca = txtMarca.getText();
+	            double precio = Double.parseDouble(txtPrecio.getText());
+	            int cilindrada = Integer.parseInt(txtCilindrada.getText());
+	            
+	            Auto auto = new Auto(matricula, marca, precio, cilindrada);
+	            double precioConDescuento = auto.promocion();
+	            txtPromocion.setText(String.valueOf(precioConDescuento));
+	        } catch (Exception ex) {
+	            JOptionPane.showMessageDialog(this, "Error: Ingrese valores numéricos válidos en los campos de Precio y Cilindrada para calcular la promoción.", "Error de Formato", JOptionPane.ERROR_MESSAGE);
+	        } 
+       }
+    }
+
+    // Método para limpiar los campos de texto
+    private void limpiarCampos() {
+        txtMatricula.setText("");
+        txtMarca.setText("");
+        txtPrecio.setText("");
+        txtCilindrada.setText("");
+        txtPromocion.setText("");
+        chkEsAuto.setSelected(false);
+        txtCilindrada.setEnabled(false); // Deshabilita el campo de cilindrada al limpiar
+    }
+
+   
+    //Chequea si hay algún campo vacío
+    private boolean camposVacios() {
+    	boolean vacio=false;
+	    if (txtMatricula.getText().isEmpty() || txtMarca.getText().isEmpty() || txtPrecio.getText().isEmpty() ||
+	            (chkEsAuto.isSelected() && txtCilindrada.getText().isEmpty())) {
+	            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos para calcular la promoción.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+	            vacio=true;
+	    } 
+	    return vacio;
+    }
 }
+
