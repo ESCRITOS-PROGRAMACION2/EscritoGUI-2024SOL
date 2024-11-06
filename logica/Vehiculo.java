@@ -1,50 +1,46 @@
 package logica;
 
 public class Vehiculo {
-	
-	private String codigo;
-	private String marca;
-	private double precio;
-	
-	public Vehiculo(){}
-	
-	public Vehiculo(String codigo, String marca, double precio) {
-		this.codigo = codigo;
-		this.marca = marca;
-		this.precio = precio;
-	}
-	
-	
+    private String matricula;
+    private String marca;
+    private double precio;
 
-	public String getCodigo() {
-		return codigo;
-	}
+    public Vehiculo(String matricula, String marca, double precio) {
+        this.matricula = matricula;
+        this.marca = marca;
+        this.precio = precio;
+    }
 
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
-	}
+    
+    public String getMatricula() {
+        return matricula;
+    }
 
-	public String getMarca() {
-		return marca;
-	}
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
 
-	public void setMarca(String marca) {
-		this.marca = marca;
-	}
+    public String getMarca() {
+        return marca;
+    }
 
-	public double getPrecio() {
-		return precio;
-	}
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
 
-	public void setPrecio(double precio) {
-		this.precio = precio;
-	}
+    public double getPrecio() {
+        return precio;
+    }
 
-	@Override
-	public String toString() {
-		return "Vehiculo: codigo=" + codigo + ", marca=" + marca + ", precio=" + precio;
-	}
-	
-	
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
 
+    @Override
+    public String toString() {
+        return 
+               " Matricula: " + matricula + '\n' +
+               " Marca: " + marca + '\n' +
+               " Precio: " + precio +'n';
+    }
 }
