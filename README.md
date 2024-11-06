@@ -1,4 +1,6 @@
 # EscritoGUI-2024
+Descargar el siguiente ![proyecto] (https://github.com/ESCRITOS-PROGRAMACION2/EscritoGUI-2024/blob/main/EscritoGUI-2024.zip), importarlo a Eclipse y realizar lo siguiente: 
+
 1) En la clase Auto, modificar el método promoción para que en lugar de retornar un void, retorne un double
 
 2) Modificar el FrmAgregarAuto para que se vea como en la siguiente imagen.
