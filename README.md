@@ -3,7 +3,7 @@
 
 2) Modificar el FrmAgregarAuto para que se vea como en la siguiente imagen.
    
-![Imagen 1](https://github.com/ESCRITOS-PROGRAMACION2/EscritoGUI-2024)
+![Imagen 1](https://github.com/ESCRITOS-PROGRAMACION2/EscritoGUI-2024/blob/main/Figura1.png)
 
    - Recordar que el el JTextField cilindrada se tiene que habilitar cuando el JCheckBox ¿Es un auto? está marcado.
 
