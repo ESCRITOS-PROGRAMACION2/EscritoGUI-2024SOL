@@ -36,11 +36,10 @@ public class Vehiculo {
         this.precio = precio;
     }
 
-    @Override
+   @Override
     public String toString() {
-        return 
-               " Matricula: " + matricula + '\n' +
-               " Marca: " + marca + '\n' +
-               " Precio: " + precio +'n';
+        return  matricula + '\t' +
+                marca + '\t' +
+                precio+'\t';
     }
 }
