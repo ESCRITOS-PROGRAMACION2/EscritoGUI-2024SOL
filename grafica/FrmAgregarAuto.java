@@ -1,4 +1,3 @@
-
 package grafica;
 
 import javax.swing.*;
@@ -8,24 +7,23 @@ import javax.swing.border.TitledBorder;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import logica.Auto;
 import logica.ListaAutos;
-import logica.Vehiculo;
 
 public class FrmAgregarAuto extends JFrame {
 
     private JPanel contentPane;
     private JTextField txtMatricula, txtMarca, txtPrecio, txtCilindrada, txtPromocion;
-    private JCheckBox chkEsAuto;
-    private JButton btnGuardar, btnCalcular, btnLimpiar;
+    private JCheckBox chkCilindrada;
+    private JButton btnAgregarAuto, btnCalcular, btnLimpiar;
+    private JTextArea textAreaAutos;
     private ListaAutos listaAutos;
   
     public FrmAgregarAuto() {
         listaAutos = new ListaAutos(); // Inicializar ListaAutos
         setTitle("Gestión de Autos");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 500, 254);
+        setBounds(100, 100, 500, 450);
         iniciarComponentes();
         iniciarManejadoresEventos();
     }
@@ -70,13 +68,8 @@ public class FrmAgregarAuto extends JFrame {
         panel1.add(txtPrecio);
 
         btnLimpiar = new JButton("Limpiar");
-        btnLimpiar.setBounds(20, 139, 90, 25);
+        btnLimpiar.setBounds(75, 139, 90, 25);
         panel1.add(btnLimpiar);
-        
-                // Botón para agregar autos
-                btnGuardar = new JButton("Guardar");
-                btnGuardar.setBounds(120, 140, 97, 23);
-                panel1.add(btnGuardar);
 
         // Panel de Datos del Auto
         JPanel panel2 = new JPanel();
@@ -97,9 +90,9 @@ public class FrmAgregarAuto extends JFrame {
         panel2.add(txtCilindrada);
 
         // CheckBox para habilitar/deshabilitar el campo de cilindrada
-        chkEsAuto = new JCheckBox("¿Es un auto?");
-        chkEsAuto.setBounds(10, 25, 100, 20);
-        panel2.add(chkEsAuto);
+        chkCilindrada = new JCheckBox("¿Es un auto?");
+        chkCilindrada.setBounds(10, 25, 100, 20);
+        panel2.add(chkCilindrada);
 
         // Panel de Promoción
         JPanel panel3 = new JPanel();
@@ -118,35 +111,28 @@ public class FrmAgregarAuto extends JFrame {
         txtPromocion.setEditable(false);
         txtPromocion.setBounds(110, 30, 90, 25);
         panel3.add(txtPromocion);
+
+        // JTextArea para mostrar la lista de autos
+        textAreaAutos = new JTextArea();
+        textAreaAutos.setEditable(false);
+        JScrollPane scrollPaneAutos = new JScrollPane(textAreaAutos);
+        scrollPaneAutos.setBounds(10, 210, 460, 130);
+        contentPane.add(scrollPaneAutos);
+
+        // Botón para agregar autos
+        btnAgregarAuto = new JButton("Agregar Auto");
+        btnAgregarAuto.setBounds(150, 350, 200, 30);
+        contentPane.add(btnAgregarAuto);
     }
 
     private void iniciarManejadoresEventos() {
-         
-    	 btnGuardar.addActionListener(new ActionListener() {
-         	public void actionPerformed(ActionEvent e) {
-         		Auto a;
-                Vehiculo v;
-         		try {
-					String matricula = txtMatricula.getText();
-					String marca = txtMarca.getText();
-					double precio = Double.valueOf(txtPrecio.getText());
-					if (chkEsAuto.isSelected()) {
-						
-						int cilindrada = Integer.valueOf(txtCilindrada.getText());
-						a = new Auto(matricula, marca, precio, cilindrada);
-						JOptionPane.showMessageDialog(null, a.toString());
-
-					} else {
-						v = new Vehiculo(matricula, marca, precio);
-						JOptionPane.showMessageDialog(null, v.toString());
-
-					}
-				} catch (Exception ex) {
-					txtPromocion.setText("Error");
-					JOptionPane.showMessageDialog(null, ex);
-				}
-         	}
-         });
+        // Acción del botón "Agregar Auto"
+        btnAgregarAuto.addActionListener(new ActionListener() {
+            
+            public void actionPerformed(ActionEvent e) {
+                agregarAuto();
+            }
+        });
 
         // Acción del botón "Calcular" para la promoción
         btnCalcular.addActionListener(new ActionListener() {
@@ -163,14 +149,38 @@ public class FrmAgregarAuto extends JFrame {
         });
 
         // Acción del JCheckBox para habilitar/deshabilitar el campo de cilindrada
-        chkEsAuto.addActionListener(new ActionListener() {
+        chkCilindrada.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                txtCilindrada.setEnabled(chkEsAuto.isSelected());
+                txtCilindrada.setEnabled(chkCilindrada.isSelected());
             }
         });
     }//fin iniciarManejadoresEventos
 
-   
+    // Método para agregar un auto a la lista y actualizar el JTextArea
+    private void agregarAuto() {
+    	if (!camposVacios()) {
+	        
+	        try {
+	            String matricula = txtMatricula.getText();
+	            String marca = txtMarca.getText();
+	            double precio = Double.parseDouble(txtPrecio.getText());
+	          //  int cilindrada = chkCilindrada.isSelected() ? Integer.parseInt(txtCilindrada.getText()) : 0;
+	            int cilindrada;   
+	            if (chkCilindrada.isSelected()) {  
+	                cilindrada = Integer.parseInt(txtCilindrada.getText());  
+	            } else {  
+	                cilindrada = 0;  
+	            }  
+	            Auto a = new Auto(matricula, marca, precio, cilindrada);
+	            listaAutos.agregar(a);
+	            actualizarListaAutos(); // Actualizar el JTextArea
+	            limpiarCampos(); // Limpiar los campos después de agregar
+	        } catch (NumberFormatException ex) {
+	            JOptionPane.showMessageDialog(this, "Error: Ingrese valores numéricos válidos en los campos de Precio y Cilindrada.", "Error de Formato", JOptionPane.ERROR_MESSAGE);
+	        }
+        }
+    }
+
     // Método para calcular la promoción y mostrar el precio con descuento
     private void calcularPromocion() {
         // Verificar si los campos requeridos están vacíos
@@ -198,16 +208,20 @@ public class FrmAgregarAuto extends JFrame {
         txtPrecio.setText("");
         txtCilindrada.setText("");
         txtPromocion.setText("");
-        chkEsAuto.setSelected(false);
+        chkCilindrada.setSelected(false);
         txtCilindrada.setEnabled(false); // Deshabilita el campo de cilindrada al limpiar
     }
 
-   
+    // Método para actualizar el JTextArea con la lista de autos
+    private void actualizarListaAutos() {
+        textAreaAutos.setText(listaAutos.listarAutos());
+    }
+    
     //Chequea si hay algún campo vacío
     private boolean camposVacios() {
     	boolean vacio=false;
 	    if (txtMatricula.getText().isEmpty() || txtMarca.getText().isEmpty() || txtPrecio.getText().isEmpty() ||
-	            (chkEsAuto.isSelected() && txtCilindrada.getText().isEmpty())) {
+	            (chkCilindrada.isSelected() && txtCilindrada.getText().isEmpty())) {
 	            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos para calcular la promoción.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
 	            vacio=true;
 	    } 
