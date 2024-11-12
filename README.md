@@ -13,4 +13,4 @@ Descargar el siguiente  [proyecto](https://github.com/ESCRITOS-PROGRAMACION2/Esc
 
 3) Completar la clase Main para que cree y muestre la ventana FrmAgregarAuto
 
-   [PROYECTO RESUELTO](https://github.com/ESCRITOS-PROGRAMACION2/EscritoGUI-2024SOL/blob/main/EscritoGUI-2024sol.zip)
+   [PROYECTO RESUELTO](https://github.com/ESCRITOS-PROGRAMACION2/EscritoGUI-2024SOL/blob/main/AgregarAutoConTextAreaHECHO.zip)
