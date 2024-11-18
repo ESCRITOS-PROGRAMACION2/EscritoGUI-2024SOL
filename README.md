@@ -1,4 +1,6 @@
-# EscritoGUI-2024 SOL
+# EscritoGUI-2024 SOL    [PROYECTO RESUELTO](https://github.com/ESCRITOS-PROGRAMACION2/EscritoGUI-2024SOL/blob/main/AgregarAutoConTextAreaHECHO.zip) <-- AQUÍ
+LETRA 
+
 Descargar el siguiente  [proyecto](https://github.com/ESCRITOS-PROGRAMACION2/EscritoGUI-2024/blob/main/EscritoGUI-2024.zip), importarlo a Eclipse y realizar lo siguiente: 
 
 1) En la clase Auto, modificar el método promoción para que en lugar de retornar un void, retorne un double
@@ -13,4 +15,4 @@ Descargar el siguiente  [proyecto](https://github.com/ESCRITOS-PROGRAMACION2/Esc
 
 3) Completar la clase Main para que cree y muestre la ventana FrmAgregarAuto
 
-   [PROYECTO RESUELTO](https://github.com/ESCRITOS-PROGRAMACION2/EscritoGUI-2024SOL/blob/main/AgregarAutoConTextAreaHECHO.zip)
+ 
